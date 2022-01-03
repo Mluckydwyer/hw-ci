@@ -7,45 +7,46 @@ on:
     branches: [ master ]
 
 jobs:
-  -
-    build-slim:
-      runs-on: ubuntu-latest
-      steps:
-      -
-          name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1 
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        file: ./Dockerfile-Slim
-        with:
-          push: true
-          tags: mluckydwyer/hw-ci:latest-slim,mluckydwyer/hw-ci:latest
+  build-slim:
+    name: "Build slim container"
+    runs-on: ubuntu-latest
+    steps:
     -
-      build-full:
-      runs-on: ubuntu-latest
-      steps:
-      -
-          name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1 
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        file: ./Dockerfile-Full
-        with:
-          push: true
-          tags: mluckydwyer/hw-ci:latest-full
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+    -
+      name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    -
+      name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      file: ./Dockerfile-Slim
+      with:
+        push: true
+        tags: mluckydwyer/hw-ci:latest-slim,mluckydwyer/hw-ci:latest
+  build-full:
+    name: "Build full container"
+    runs-on: ubuntu-latest
+    needs: build-slim
+    steps:
+    -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+    -
+      name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    -
+      name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      file: ./Dockerfile-Full
+      with:
+        push: true
+        tags: mluckydwyer/hw-ci:latest-full
