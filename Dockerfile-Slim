@@ -5,8 +5,6 @@ LABEL Maintainer="Matthew Dwyer <dwyer@iastate.edu>"
 LABEL Name="Hardware Verification CI Docker container-Slim"
 LABEL Description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW CI regression testing."
 ENV container docker
-#ENV DISPLAY=host.docker.internal:0.0
-ENV LIBGL_ALWAYS_INDRIECT=1
 
 # Update Yum Repos & Update All
 RUN yum install -y https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.9-1.x86_64.rpm \
@@ -63,12 +61,6 @@ RUN yum -y install verilator
 
 # Install GHDL
 FROM verilator as ghdl
-# RUN yum -y install gtkwave centos-release-scl centos-release-scl && \
-#     yum -y install devtoolset-9-gcc fedora-gnat-project-common zlib-devel \
-#     scl-utils gcc-gnat
-# RUN scl enable devtoolset-9 zsh
-# WORKDIR external
-
 RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl \
     && yum install -y devtoolset-8 texinfo
 RUN mkdir -p /tmp/gnat \
@@ -78,18 +70,6 @@ RUN mkdir -p /tmp/gnat \
 ENV OG_PATH=$PATH
 ENV PATH=/opt/gnat/bin:$PATH
 # SHELL [ "/usr/bin/scl", "enable", "devtoolset-8" ]
-
-# Compile GCC
-# RUN yum -y install bzip2 flex bison
-# RUN git clone git://gcc.gnu.org/git/gcc.git gcc
-# WORKDIR gcc
-# RUN git checkout releases/gcc-11.2.0
-# RUN ./contrib/download_prerequisites
-# RUN mkdir objdir
-# WORKDIR objdir
-# RUN ../configure --prefix=$PWD/bin_dir
-# RUN make bootstrap-lean -j 4
-
 RUN mkdir ghdl-1.0.0 \
     && curl -sL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1
 WORKDIR ghdl-1.0.0
@@ -115,6 +95,5 @@ RUN pip3 install glob2 coverage matplotlib remote_pdb debugpy teroshdl yowasp-yo
 FROM cocotb as final
 RUN mkdir -p /workspaces/logs
 WORKDIR /workspaces/
-# COPY . /workspaces/toolflow
 #ENTRYPOINT /usr/bin/startup.sh
 RUN chmod +rw /root/ -R

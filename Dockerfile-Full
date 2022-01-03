@@ -19,9 +19,10 @@ RUN mkdir -p ~/.config/code-server \
 
 # Quality of Life Additions
 FROM vscode as qol
-RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox dos2unix
+RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox dos2unix gtkwave
 # RUN yum groupinstall "Development tools"
 
+# Command Line ZSH tools
 # RUN curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 # RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 # RUN echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>! ~/.zshrc
@@ -30,12 +31,6 @@ RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox do
 # RUN sed -i 's/_THEME=\"robbyrussel\"/_THEME=\"linuxonly\"/g' ~/.zshrc
 # RUN chsh -s /bin/zsh
 
-COPY resources/start-code-server.sh /usr/bin/
-COPY resources/start-modelsim.sh /usr/bin/
-COPY resources/startup.sh /usr/bin/
-RUN chmod +x /usr/bin/start-code-server.sh \
-    && chmod +x /usr/bin/start-modelsim.sh \
-    && chmod +x /usr/bin/startup.sh
 # RUN echo "(/usr/bin/start-code-server.sh &> /tmp/code-server.log)" >> ~/.bashrc
 
 # VNC Server for GUI applications
@@ -55,6 +50,8 @@ RUN chmod +x /usr/bin/start-vnc-session.sh \
 
 FROM vnc as final
 WORKDIR /workspaces/
-COPY . /workspaces/toolflow
+COPY ./resources /workspaces/tools
+RUN chmod +x /workspaces/tools/*.sh
+ENV PATH=/workspaces/tools:$PATH
 #ENTRYPOINT /usr/bin/startup.sh
 RUN chmod +rw /root/ -R

@@ -1,3 +1,0 @@
-[submodule "external/verilog-axis"]
-	path = external/verilog-axis
-	url = https://github.com/alexforencich/verilog-axis

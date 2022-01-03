@@ -27,7 +27,9 @@ jobs:
       with:
         file: ./Dockerfile-Slim
         push: true
-        tags: mluckydwyer/hw-ci:latest-slim,mluckydwyer/hw-ci:latest
+        tags: mluckydwyer/hw-ci:slim,mluckydwyer/hw-ci:latest
+        cache-from: type=registry,ref=mluckydwyer/hw-ci:buildcache
+        cache-to: type=registry,ref=mluckydwyer/hw-ci:buildcache,mode=max
   build-full:
     name: "Build full container"
     runs-on: ubuntu-latest
@@ -49,4 +51,6 @@ jobs:
       with:
         file: ./Dockerfile-Full
         push: true
-        tags: mluckydwyer/hw-ci:latest-full
+        tags: mluckydwyer/hw-ci:full
+        cache-from: type=registry,ref=mluckydwyer/hw-ci:buildcache
+        cache-to: type=registry,ref=mluckydwyer/hw-ci:buildcache,mode=max
