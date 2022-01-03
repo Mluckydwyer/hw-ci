@@ -80,7 +80,7 @@ ENV PATH=$OG_PATH
 
 # Install CocoTb
 FROM ghdl as cocotb
-RUN pip3 install glob2 coverage matplotlib remote_pdb debugpy teroshdl yowasp-yosys vsg \
+RUN pip3 install glob2 coverage \
                  pytest pytest-parallel pytest-xdist pytest-html pytest-sugar pytest-randomly \
                  pytest-emoji pytest-icdiff pytest-asyncio pytest-rerunfailures pytest-repeat \
                  cocotb cocotb_bus cocotb-test cocotb-coverage cocotbext-axi

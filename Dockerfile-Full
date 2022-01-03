@@ -19,7 +19,8 @@ RUN mkdir -p ~/.config/code-server \
 
 # Quality of Life Additions
 FROM vscode as qol
-RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox dos2unix gtkwave
+RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox dos2unix gtkwave \
+    && pip3 install matplotlib remote_pdb debugpy teroshdl yowasp-yosys vsg
 # RUN yum groupinstall "Development tools"
 
 # Command Line ZSH tools
