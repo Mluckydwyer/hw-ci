@@ -11,7 +11,7 @@ ENV LIBGL_ALWAYS_INDRIECT=1
 
 # VSCode Remote Env
 FROM slim as vscode
-RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN curl -sSL https://code-server.dev/install.sh | sh
 EXPOSE 8080
 RUN mkdir -p ~/.config/code-server \
     && touch ~/.config/code-server/config.yaml \
@@ -24,7 +24,7 @@ RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox do
 # RUN yum groupinstall "Development tools"
 
 # Command Line ZSH tools
-# RUN curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+# RUN curl -sSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 # RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 # RUN echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>! ~/.zshrc
 # RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting

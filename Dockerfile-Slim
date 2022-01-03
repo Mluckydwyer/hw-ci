@@ -18,7 +18,7 @@ RUN yum -y install gcc gcc-c++ libstdc++-devel \
         readline-devel.i686 gdbm-devel.i686 openssl-devel.i686 ncurses-devel.i686 \
         tcl-devel.i686 db4-devel.i686 bzip2-devel.i686 libffi-devel.i686 \
     && mkdir /tmp/{Archive,Build} \
-    && curl -s -o /tmp/Archive/Python-3.6.14.tgz https://www.python.org/ftp/python/3.6.14/Python-3.6.14.tgz \
+    && curl -sSL https://www.python.org/ftp/python/3.6.14/Python-3.6.14.tgz-o /tmp/Archive/Python-3.6.14.tgz \
     && tar xzvf /tmp/Archive/Python-3.6.14.tgz -C /tmp/Build \
     && rm /tmp/Archive/Python-3.6.14.tgz \
     && mkdir -p /opt/Python-3.6.14
@@ -48,7 +48,7 @@ RUN yum install -y libiodbc unixODBC ncurses ncurses-libs \
     glibc glibc.i686 glibc-devel.i386 libgcc.i686 libstdc++-devel.i686 libstdc++ \
     libstdc++.i686 libXext libXext.i686 libXft libXft.i686 libXrender libXtst
 WORKDIR /tmp
-RUN curl -s -O https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run \
+RUN curl -sSO https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run \
     && chmod +x ModelSimSetup-20.1.1.720-linux.run
 RUN ./ModelSimSetup-20.1.1.720-linux.run --mode unattended --installdir /opt/intelFPGA/20.1 --accept_eula 1 --modelsim_edition modelsim_ase \
     && rm ModelSimSetup-20.1.1.720-linux.run
@@ -64,14 +64,14 @@ FROM verilator as ghdl
 RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl \
     && yum install -y devtoolset-8 texinfo
 RUN mkdir -p /tmp/gnat \
- && curl -sL https://community.download.adacore.com/v1/9682e2e1f2f232ce03fe21d77b14c37a0de5649b?filename=gnat-gpl-2017-x86_64-linux-bin.tar.gz | tar -xz -C /tmp/gnat --strip-components=1 \
+ && curl -sSL https://community.download.adacore.com/v1/9682e2e1f2f232ce03fe21d77b14c37a0de5649b?filename=gnat-gpl-2017-x86_64-linux-bin.tar.gz | tar -xz -C /tmp/gnat --strip-components=1 \
  && cd /tmp/gnat \
  && make ins-all prefix="/opt/gnat"
 ENV OG_PATH=$PATH
 ENV PATH=/opt/gnat/bin:$PATH
 # SHELL [ "/usr/bin/scl", "enable", "devtoolset-8" ]
 RUN mkdir ghdl-1.0.0 \
-    && curl -sL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1
+    && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1
 WORKDIR ghdl-1.0.0
 RUN ./configure --prefix=/usr/local \
     && make -j 4 \
