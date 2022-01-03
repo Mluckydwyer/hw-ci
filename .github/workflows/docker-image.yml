@@ -24,8 +24,8 @@ jobs:
       name: Build and push
       id: docker_build
       uses: docker/build-push-action@v2
-      file: ./Dockerfile-Slim
       with:
+        file: ./Dockerfile-Slim
         push: true
         tags: mluckydwyer/hw-ci:latest-slim,mluckydwyer/hw-ci:latest
   build-full:
@@ -46,7 +46,7 @@ jobs:
       name: Build and push
       id: docker_build
       uses: docker/build-push-action@v2
-      file: ./Dockerfile-Full
       with:
+        file: ./Dockerfile-Full
         push: true
         tags: mluckydwyer/hw-ci:latest-full
