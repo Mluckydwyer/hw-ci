@@ -1,0 +1,34 @@
+{
+	"name": "Hardware Development Container",
+    "image": "mluckydwyer/hw-ci",
+
+	"settings": { 
+		//"terminal.integrated.shell.linux": "/bin/bash",
+        "terminal.integrated.profiles.linux": {
+            "default": {
+              "path": "zsh",
+              "args": ["-l"]
+            }
+          },
+          "terminal.integrated.defaultProfile.linux": "default"
+	},
+
+    "forwardPorts": [5678, 5900, 6080, 8080],
+
+	"extensions": [
+		"austin.code-gnu-global",
+        // "eamodio.gitlens",
+        "ms-vsliveshare.vsliveshare",
+        "technosophos.vscode-make",
+        "technosophos.vscode-make",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "teros-technology.teroshdl",
+        "wavetrace.wavetrace",
+        "puorc.awesome-vhdl",
+        "mshr-h.veriloghdl",
+        "tht13.html-preview-vscode",
+        "ms-vscode.test-adapter-converter",
+        "littlefoxteam.vscode-python-test-adapter"
+	]
+}

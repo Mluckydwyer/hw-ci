@@ -1,0 +1,89 @@
+# VSCode
+.vscode
+
+# Intelij
+.idea
+
+# CPP
+*.o
+*.c.o
+*.nfs*
+*.cpp.o
+*.a
+
+# Python
+__pycache__
+.pytest_cache
+
+# Pytest
+*.out
+*.log
+*.html
+transcript
+assets
+*.css
+
+# Waveforms
+*.vcd
+
+# Results
+results.xml
+*_results.xml
+**/tb/sim_build/
+**/tb/sim_build/**
+**/tb/sim_build/*
+sim_build
+sim_build/
+sim_build/*.xml
+**/sim_build/*.xml
+**/sim_build/**
+**/sim_build/*
+sim_build/*
+sim_build/**
+*/sim_build/*
+*/sim_build/**
+
+# External
+*.tar.gz
+
+# VCS files
+*.tab
+ucli.key
+
+# Cadence Incisive/Xcelium
+*.elog
+irun.log
+xrun.log
+irun.key
+xrun.key
+irun.history
+xrun.history
+INCA_libs
+xcelium.d
+ncelab_*.err
+xmelab_*.err
+ncsim_*.err
+xmsim_*.err
+bpad_*.err
+.bpad/
+.simvision/
+waves.shm/
+
+# Mentor Modelsim/Questa
+modelsim.ini
+transcript
+*.wlf
+*.opt
+work
+
+# Riviera
+library.cfg
+dataset.asdb
+compile
+library.cfg
+dataset.asdb
+compile
+
+# Vivado
+cache
+*.cache
