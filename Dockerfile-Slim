@@ -2,7 +2,8 @@
 FROM centos:7 as base
 
 LABEL Maintainer="Matthew Dwyer <dwyer@iastate.edu>"
-LABEL Description="Hardware Verification CI Docker container"
+LABEL Name="Hardware Verification CI Docker container-Slim"
+LABEL Description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW CI regression testing."
 ENV container docker
 #ENV DISPLAY=host.docker.internal:0.0
 ENV LIBGL_ALWAYS_INDRIECT=1
@@ -104,57 +105,6 @@ RUN pip3 install glob2 coverage matplotlib remote_pdb debugpy teroshdl yowasp-yo
                  pytest-emoji pytest-icdiff pytest-asyncio pytest-rerunfailures pytest-repeat \
                  cocotb cocotb_bus cocotb-test cocotb-coverage cocotbext-axi
 
-# VSCode
-FROM cocotb as vscode
-# rpm --import https://packages.microsoft.com/keys/microsoft.asc && sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-# yum -y install code
-
-# VSCode Remote Env
-# COPY resources/code-server-install.sh /usr/bin/
-# RUN chmod +x /usr/bin/code-server-install.sh
-RUN curl -fsSL https://code-server.dev/install.sh | sh
-EXPOSE 8080
-RUN mkdir -p ~/.config/code-server \
-    && touch ~/.config/code-server/config.yaml \
-    && sed -i.bak 's/auth: password/auth: none/' ~/.config/code-server/config.yaml
-
-# Quality of Life Additions
-FROM vscode as qol
-RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox dos2unix
-# RUN yum groupinstall "Development tools"
-
-# RUN curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-# RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-# RUN echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>! ~/.zshrc
-# RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-# RUN echo 'source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting' >>! ~/.zshrc
-# # RUN sed -i 's/_THEME=\"robbyrussel\"/_THEME=\"linuxonly\"/g' ~/.zshrc
-# RUN chsh -s /bin/zsh
-
-
-COPY resources/start-code-server.sh /usr/bin/
-COPY resources/start-modelsim.sh /usr/bin/
-COPY resources/startup.sh /usr/bin/
-RUN chmod +x /usr/bin/start-code-server.sh \
-    && chmod +x /usr/bin/start-modelsim.sh \
-    && chmod +x /usr/bin/startup.sh
-# RUN echo "(/usr/bin/start-code-server.sh &> /tmp/code-server.log)" >> ~/.bashrc
-
-# VNC Server for GUI applications
-FROM qol as vnc
-RUN yum -y install xorg-x11-server-Xvfb x11vnc xterm openbox
-ENV WINDOW_MANAGER="openbox"
-RUN sed -ri "s/<number>4<\/number>/<number>1<\/number>/" /etc/xdg/openbox/rc.xml \
-    && git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
-    && git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify
-EXPOSE 5900 6080
-COPY resources/novnc-index.html /opt/novnc/index.html
-COPY resources/start-vnc-session.sh /usr/bin/
-RUN chmod +x /usr/bin/start-vnc-session.sh \
-    && pip3 install numpy \
-    && echo "export DISPLAY=:0" >> ~/.bashrc \
-    && echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)" >> ~/.bashrc
-
 # User [coder:coder]
 # RUN useradd -ms /bin/bash coder -m -G wheel,root -p "$(openssl passwd -1 coder)"
 # RUN usermod -aG wheel coder
@@ -162,9 +112,9 @@ RUN chmod +x /usr/bin/start-vnc-session.sh \
 # ENV USER=coder
 # WORKDIR /home/coder
 
-FROM vnc as final
+FROM cocotb as final
 RUN mkdir -p /workspaces/logs
 WORKDIR /workspaces/
-COPY . /workspaces/toolflow
+# COPY . /workspaces/toolflow
 #ENTRYPOINT /usr/bin/startup.sh
 RUN chmod +rw /root/ -R

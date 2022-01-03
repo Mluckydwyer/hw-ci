@@ -1,0 +1,60 @@
+# mluckydwyer/hw-ci Docker Container
+FROM mluckydwyer/hw-ci:slim as slim
+
+LABEL Maintainer="Matthew Dwyer <dwyer@iastate.edu>"
+LABEL Description="Hardware Verification CI Docker container"
+LABEL Description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW Development (+VNC)."
+ENV container docker
+#ENV DISPLAY=host.docker.internal:0.0
+ENV LIBGL_ALWAYS_INDRIECT=1
+
+
+# VSCode Remote Env
+FROM slim as vscode
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+EXPOSE 8080
+RUN mkdir -p ~/.config/code-server \
+    && touch ~/.config/code-server/config.yaml \
+    && sed -i.bak 's/auth: password/auth: none/' ~/.config/code-server/config.yaml
+
+# Quality of Life Additions
+FROM vscode as qol
+RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox dos2unix
+# RUN yum groupinstall "Development tools"
+
+# RUN curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+# RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+# RUN echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>! ~/.zshrc
+# RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# RUN echo 'source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting' >>! ~/.zshrc
+# RUN sed -i 's/_THEME=\"robbyrussel\"/_THEME=\"linuxonly\"/g' ~/.zshrc
+# RUN chsh -s /bin/zsh
+
+COPY resources/start-code-server.sh /usr/bin/
+COPY resources/start-modelsim.sh /usr/bin/
+COPY resources/startup.sh /usr/bin/
+RUN chmod +x /usr/bin/start-code-server.sh \
+    && chmod +x /usr/bin/start-modelsim.sh \
+    && chmod +x /usr/bin/startup.sh
+# RUN echo "(/usr/bin/start-code-server.sh &> /tmp/code-server.log)" >> ~/.bashrc
+
+# VNC Server for GUI applications
+FROM qol as vnc
+RUN yum -y install xorg-x11-server-Xvfb x11vnc xterm openbox
+ENV WINDOW_MANAGER="openbox"
+RUN sed -ri "s/<number>4<\/number>/<number>1<\/number>/" /etc/xdg/openbox/rc.xml \
+    && git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
+    && git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify
+EXPOSE 5900 6080
+COPY resources/novnc-index.html /opt/novnc/index.html
+COPY resources/start-vnc-session.sh /usr/bin/
+RUN chmod +x /usr/bin/start-vnc-session.sh \
+    && pip3 install numpy \
+    && echo "export DISPLAY=:0" >> ~/.bashrc \
+    && echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)" >> ~/.bashrc
+
+FROM vnc as final
+WORKDIR /workspaces/
+COPY . /workspaces/toolflow
+#ENTRYPOINT /usr/bin/startup.sh
+RUN chmod +rw /root/ -R

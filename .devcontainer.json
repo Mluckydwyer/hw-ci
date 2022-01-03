@@ -17,7 +17,6 @@
 
 	"extensions": [
 		"austin.code-gnu-global",
-        // "eamodio.gitlens",
         "ms-vsliveshare.vsliveshare",
         "technosophos.vscode-make",
         "technosophos.vscode-make",
