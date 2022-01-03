@@ -49,8 +49,8 @@ RUN yum install -y libiodbc unixODBC ncurses ncurses-libs \
     libstdc++.i686 libXext libXext.i686 libXft libXft.i686 libXrender libXtst
 WORKDIR /tmp
 RUN curl -s -S -O https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run \
-    && chmod +x ModelSimSetup-20.1.1.720-linux.run
-RUN ./ModelSimSetup-20.1.1.720-linux.run --mode unattended --installdir /opt/intelFPGA/20.1 --accept_eula 1 --modelsim_edition modelsim_ase \
+    && chmod +x ModelSimSetup-20.1.1.720-linux.run \
+    && ./ModelSimSetup-20.1.1.720-linux.run --mode unattended --installdir /opt/intelFPGA/20.1 --accept_eula 1 --modelsim_edition modelsim_ase \
     && rm ModelSimSetup-20.1.1.720-linux.run
 ENV PATH="/opt/intelFPGA/20.1/modelsim_ase/bin:${PATH}"
 
