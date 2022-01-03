@@ -18,7 +18,7 @@ RUN yum -y install gcc gcc-c++ libstdc++-devel \
         readline-devel.i686 gdbm-devel.i686 openssl-devel.i686 ncurses-devel.i686 \
         tcl-devel.i686 db4-devel.i686 bzip2-devel.i686 libffi-devel.i686 \
     && mkdir /tmp/{Archive,Build} \
-    && curl -s -S -L https://www.python.org/ftp/python/3.6.14/Python-3.6.14.tgz-o /tmp/Archive/Python-3.6.14.tgz \
+    && curl -s -S -L https://www.python.org/ftp/python/3.6.14/Python-3.6.14.tgz -o /tmp/Archive/Python-3.6.14.tgz \
     && tar xzvf /tmp/Archive/Python-3.6.14.tgz -C /tmp/Build \
     && rm /tmp/Archive/Python-3.6.14.tgz \
     && mkdir -p /opt/Python-3.6.14
