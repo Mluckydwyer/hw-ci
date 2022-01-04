@@ -4,9 +4,9 @@
   -->
   <a title="hw-ci" href="https://hub.docker.com/repository/docker/mluckydwyer/hw-ci"><img src="https://badgen.net/badge/icon/docker?icon=docker&label"></a><!--
   -->
-  <a title="Docker Image Size (Slim)" href="https://hub.docker.com/repository/docker/mluckydwyer/hw-ci"><img alt="Slim Container Size" src="https://img.shields.io/docker/image-size/Mluckydwyer/hw-ci/slim"></a><!--
+  <a title="Docker Image Size (Slim)" href="https://hub.docker.com/repository/docker/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/slim?label=image%20size%20%28Slim%29"></a><!--
   -->
-  <a title="Docker Image Size (Full)" href="https://hub.docker.com/repository/docker/mluckydwyer/hw-ci"><img alt="Full Container Size" src="https://img.shields.io/docker/image-size/Mluckydwyer/hw-ci/full"></a><!--
+  <a title="Docker Image Size (Full)" href="https://hub.docker.com/repository/docker/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/full?label=image%20size%20%28Flim%29"></a><!--
   -->
   <a title="Open in Visual Studio Code" href="https://open.vscode.dev/Mluckydwyer/hw-ci"><img src="https://open.vscode.dev/badges/open-in-vscode.svg"></a><!--
   -->
