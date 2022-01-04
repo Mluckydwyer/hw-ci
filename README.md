@@ -1,4 +1,4 @@
-# Hardware CI & Dev Containter
+# ⚗️ Hardware CI & Development Containter 🚢
 <p align="center">
   <a title="Image Builds" href="https://github.com/Mluckydwyer/hw-ci/actions"><img src="https://github.com/Mluckydwyer/hw-ci/actions/workflows/docker-image.yml/badge.svg"></a><!--
   -->
@@ -17,21 +17,23 @@
 
 These containers were created for my personal hardware development projects and courses duing my undergraduate degree. Please feel free to use them and give feedback, as I am always looking to improve them. [hdl/containers](https://github.com/hdl/containers) also have a great selection of containers designed for hardware development, so be sure to check them out as well.
 
-## Getting Started
+
+## 🚀 Getting Started
 To get started with this container, pull either the `slim` or `full` variants from the Docker:
-```sh
+```bash
 docker pull mluckydwyer/hw-ci:slim
 ```
-```sh
+```bash
 docker pull mluckydwyer/hw-ci:full
 ```
 
 This container also has support for VScode Development Containers and Github Code Spaces. In both cases, the `full` variant will be used, as it is intended for development and includes additional tools (See the _Tools_ sections for more details).
 
-## Tools
+
+## 🛠️ Tools
 This container is split into two variants, `slim` and `full`. The `slim` variant contains all of the primary simulation and testing tools needed for CD/CI hardware development and is intended to be used unattended. The `full` variant is built on top of the `slim` container and also includes additional tools that are useful when using the container for development. See the table below for additional details:
 
-|                    Tool                    |   Slim   |   Full   |
+|                    Tool                    |   Slim 🪶  |   Full   |
 |:------------------------------------------:|:--------:|:--------:|
 |                   Base OS                  | Centos 7 | Centos 7 |
 |               Size (Download)              |  ~3.1 GB  |  ~3.7 GB  |
@@ -58,10 +60,17 @@ This container is split into two variants, `slim` and `full`. The `slim` variant
 |             Sudo + Wget + Htop             |          |     ✅    |
 |           GUI Tool Helper Scripts          |          |     ✅    |
 
-## CprE 480: GPU Architecture (Iowa State)
+### Helper Scripts
+Here is a list of the included helper scripts in the `full` container. They are included on the system path and can be run from anyhere:
+- `start-modelsim`: Open Modelsim in GUI mode.
+- `start-vnc-session`: Start the NoVNC server (VNC can be accessed on port 5090, NoVNC webserver can be accessed at localhost:6080 @1080p).
+- `start-code-server`: Start the VSCode remote server (Can also be done by opening the container in VSCode).
+
+
+## 🧮 CprE 480: GPU Architecture (Iowa State)
 This container was originally created for the verifiaction of the OpenGL complient GPUs desined in this course. Thus, it purposefully includes VHDL simulation tools and Pytest support to make verification as easy as possible. For templates of lab verificaiton testbenches and automated Gitlab and Github Actions, please reach out to me either over e-mail or the alumni channel in Discord.
 
-[![Contributors over time](https://contributor-graph-api.apiseven.com/contributors-svg?chart=contributorOverTime&repo=Mluckydwyer/hw-ci)](https://www.apiseven.com/en/contributor-graph?chart=contributorOverTime&repo=Mluckydwyer/hw-ci)
+<!-- [![Contributors over time](https://contributor-graph-api.apiseven.com/contributors-svg?chart=contributorOverTime&repo=Mluckydwyer/hw-ci)](https://www.apiseven.com/en/contributor-graph?chart=contributorOverTime&repo=Mluckydwyer/hw-ci) -->
 
 
 
