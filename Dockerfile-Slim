@@ -75,7 +75,7 @@ RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl \
     && ./configure --prefix=/usr/local \
     && make -j 4 \
     && make install \
-    && pip3 install pyghdl \
+    # && pip3 install pyghdl \
     && cd .. \
     && rm -rf ./ghdl-1.0.0 \
     && rm -rf /tmp/gnat \
