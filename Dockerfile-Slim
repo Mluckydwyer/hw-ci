@@ -79,7 +79,7 @@ RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl \
     && cd .. \
     && rm -rf ./ghdl-1.0.0 \
     && rm -rf /tmp/gnat \
-    && yum remove devtoolset-8
+    # && yum remove devtoolset-8
 
 # SHELL [ "/usr/bin/scl", "enable", "devtoolset-8" ]
 # RUN mkdir ghdl-1.0.0 \
