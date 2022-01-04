@@ -11,9 +11,9 @@ ENV LIBGL_ALWAYS_INDRIECT=1
 
 # VSCode Remote Env
 FROM slim as vscode
-RUN curl -sSL https://code-server.dev/install.sh | sh
 EXPOSE 8080
-RUN mkdir -p ~/.config/code-server \
+RUN curl -sSL https://code-server.dev/install.sh | sh \
+    && mkdir -p ~/.config/code-server \
     && touch ~/.config/code-server/config.yaml \
     && sed -i.bak 's/auth: password/auth: none/' ~/.config/code-server/config.yaml
 
@@ -36,23 +36,24 @@ RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox do
 
 # VNC Server for GUI applications
 FROM qol as vnc
-RUN yum -y install xorg-x11-server-Xvfb x11vnc xterm openbox
 ENV WINDOW_MANAGER="openbox"
-RUN sed -ri "s/<number>4<\/number>/<number>1<\/number>/" /etc/xdg/openbox/rc.xml \
-    && git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
-    && git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify
 EXPOSE 5900 6080
-COPY resources/novnc-index.html /opt/novnc/index.html
-COPY resources/start-vnc-session.sh /usr/bin/
-RUN chmod +x /usr/bin/start-vnc-session.sh \
+RUN yum -y install xorg-x11-server-Xvfb x11vnc xterm openbox \
     && pip3 install numpy \
+    && sed -ri "s/<number>4<\/number>/<number>1<\/number>/" /etc/xdg/openbox/rc.xml \
+    && git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
+    && git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify \
     && echo "export DISPLAY=:0" >> ~/.bashrc \
     && echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)" >> ~/.bashrc
+COPY resources/novnc-index.html /opt/novnc/index.html
+COPY resources/start-vnc-session.sh /usr/bin/
+RUN chmod +x /usr/bin/start-vnc-session.sh
+
 
 FROM vnc as final
+ENV PATH=/workspaces/tools:$PATH
 WORKDIR /workspaces/
 COPY ./resources /workspaces/tools
-RUN chmod +x /workspaces/tools/*.sh
-ENV PATH=/workspaces/tools:$PATH
+RUN chmod +x /workspaces/tools/*.sh \
+    && chmod +rw /root/ -R
 #ENTRYPOINT /usr/bin/startup.sh
-RUN chmod +rw /root/ -R
