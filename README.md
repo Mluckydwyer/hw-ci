@@ -37,7 +37,7 @@ This container is split into two variants, `slim` and `full`. The `slim` variant
 |:------------------------------------------:|:--------:|:--------:|
 |                   Base OS                  | Centos 7 | Centos 7 |
 |               Size (Compressed Download)   |  ~2.7 GB  |  ~3.3 GB  |
-|              Size (Uncompressed Local)     |  ~8.4 GB  |  ~14 GB  |
+|              Size (Uncompressed Local)     |  ~8.4 GB  |  ~9.8 GB  |
 |         Modelsim 20.1.1.720 (Intel)        |     ✅    |     ✅    |
 |                  Verilator                 |     ✅    |     ✅    |
 |                    GHDL                    |     ✅    |     ✅    |

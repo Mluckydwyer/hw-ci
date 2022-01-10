@@ -21,13 +21,20 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     -
+      name: Login to GitHub Container Registry
+      uses: docker/login-action@v1 
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUBCR_TOKEN }}
+    -
       name: Build and push
       id: docker_build
       uses: docker/build-push-action@v2
       with:
         file: ./Dockerfile-Slim
         push: true
-        tags: mluckydwyer/hw-ci:slim,mluckydwyer/hw-ci:latest
+        tags: mluckydwyer/hw-ci:slim,mluckydwyer/hw-ci:latest,ghcr.io/mluckydwyer/hw-ci:slim,ghcr.io/mluckydwyer/hw-ci:latest
         cache-from: type=registry,ref=mluckydwyer/hw-ci:buildcache
         cache-to: type=registry,ref=mluckydwyer/hw-ci:buildcache,mode=max
   build-full:
@@ -45,12 +52,19 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     -
+      name: Login to GitHub Container Registry
+      uses: docker/login-action@v1 
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUBCR_TOKEN }}
+    -
       name: Build and push
       id: docker_build
       uses: docker/build-push-action@v2
       with:
         file: ./Dockerfile-Full
         push: true
-        tags: mluckydwyer/hw-ci:full
+        tags: mluckydwyer/hw-ci:full,ghcr.io/mluckydwyer/hw-ci:full
         cache-from: type=registry,ref=mluckydwyer/hw-ci:buildcache
         cache-to: type=registry,ref=mluckydwyer/hw-ci:buildcache,mode=max
