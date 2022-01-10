@@ -33,11 +33,11 @@ This container also has support for VScode Development Containers and Github Cod
 ## 🛠️ Tools
 This container is split into two variants, `slim` and `full`. The `slim` variant contains all of the primary simulation and testing tools needed for CD/CI hardware development and is intended to be used unattended. The `full` variant is built on top of the `slim` container and also includes additional tools that are useful when using the container for development. See the table below for additional details:
 
-|                    Tool                    |   Slim 🪶  |   Full   |
+|                    Tool                    |   Slim 🪶  |   Full 🔮 |
 |:------------------------------------------:|:--------:|:--------:|
 |                   Base OS                  | Centos 7 | Centos 7 |
-|               Size (Download)              |  ~3.1 GB  |  ~3.7 GB  |
-|              Size (Extracted)              |  ~11.5 GB  |  ~14 GB  |
+|               Size (Compressed Download)   |  ~2.7 GB  |  ~3.3 GB  |
+|              Size (Uncompressed Local)     |  ~8.4 GB  |  ~14 GB  |
 |         Modelsim 20.1.1.720 (Intel)        |     ✅    |     ✅    |
 |                  Verilator                 |     ✅    |     ✅    |
 |                    GHDL                    |     ✅    |     ✅    |
@@ -60,7 +60,7 @@ This container is split into two variants, `slim` and `full`. The `slim` variant
 |             Sudo + Wget + Htop             |          |     ✅    |
 |           GUI Tool Helper Scripts          |          |     ✅    |
 
-### Helper Scripts
+### 📜 Helper Scripts
 Here is a list of the included helper scripts in the `full` container. They are included on the system path and can be run from anyhere:
 - `start-modelsim`: Open Modelsim in GUI mode.
 - `start-vnc-session`: Start the NoVNC server (VNC can be accessed on port 5090, NoVNC webserver can be accessed at localhost:6080 @1080p).
