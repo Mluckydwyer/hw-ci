@@ -2,9 +2,9 @@
 <p align="center">
   <a title="Image Builds" href="https://github.com/Mluckydwyer/hw-ci/actions"><img src="https://github.com/Mluckydwyer/hw-ci/actions/workflows/docker-image.yml/badge.svg"></a><!--
   -->
-  <a href="https://hub.docker.com/repository/docker/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/slim?label=image%20size%20%28Slim%29"></a><!--
+  <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/slim?label=Image%20Size%20%28Slim%29"></a><!--
   -->
-  <a  href="https://hub.docker.com/repository/docker/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/full?label=image%20size%20%28Flim%29"></a><!--
+  <a  href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/full?label=Image%20Size%20%28Full%29"></a><!--
   -->
   <a title="Open in VSCode" href="https://open.vscode.dev/Mluckydwyer/hw-ci"><img src="https://open.vscode.dev/badges/open-in-vscode.svg"></a><!--
   -->
