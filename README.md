@@ -15,16 +15,17 @@
   -->
 </p>
 
-These containers were created for my personal hardware development projects and courses duing my undergraduate degree. Please feel free to use them and give feedback, as I am always looking to improve them. [hdl/containers](https://github.com/hdl/containers) also have a great selection of containers designed for hardware development, so be sure to check them out as well.
+These containers were created for my personal hardware development projects and courses duing my undergraduate degree. Please feel free to use them and give feedback, as I am always looking to improve them. [hdl/containers](https://github.com/hdl/containers) also has a great selection of containers designed for hardware development, so be sure to check them out as well.
 
 
 ## 🚀 Getting Started
-To get started with this container, pull either the `slim` or `full` variants from the Docker:
-```bash
+To get started with this container, pull either the `slim` or `full` variants from the Docker (`slim` = `latest`):
+```properties
 docker pull mluckydwyer/hw-ci:slim
 ```
-```bash
-docker pull mluckydwyer/hw-ci:full
+These containers can also be found on the Github Container Registry:
+```properties
+docker pull ghcr.io/mluckydwyer/hw-ci:full
 ```
 
 This container also has support for VScode Development Containers and Github Code Spaces. In both cases, the `full` variant will be used, as it is intended for development and includes additional tools (See the _Tools_ sections for more details).
@@ -69,4 +70,4 @@ Here is a list of the included helper scripts in the `full` container. They are 
 
 
 ## 🧮 CprE 480: GPU Architecture (Iowa State)
-This container was originally created for the verifiaction of the OpenGL complient GPUs designed in this course. Thus, it purposefully includes VHDL simulation tools and Pytest support to make verification as easy as possible. For templates of lab verificaiton testbenches and automated Gitlab and Github Actions, please reach out to me either over e-mail or the alumni channel in Discord.
+This container was originally created for the verifiaction of the OpenGL complient GPUs designed in this course. Thus, it purposefully includes VHDL simulation tools and Pytest support to make verification as easy as possible. For templates of lab verificaiton test benches and automated Gitlab and Github Actions, please reach out to me either over [e-mail](mailto:dwyer@iastate.edu) or the alumni channel in Discord.
