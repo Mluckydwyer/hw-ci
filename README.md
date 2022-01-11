@@ -1,4 +1,4 @@
-# ⚗️ Hardware CI & Development Containter 🚢
+# ⚗️ Hardware CI & Dev Containters 🚢
 <p align="center">
   <a title="Image Builds" href="https://github.com/Mluckydwyer/hw-ci/actions"><img src="https://github.com/Mluckydwyer/hw-ci/actions/workflows/docker-image.yml/badge.svg"></a><!--
   -->
