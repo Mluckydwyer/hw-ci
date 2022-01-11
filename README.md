@@ -33,8 +33,9 @@ This container also has support for VScode Development Containers and Github Cod
 ## 🛠️ Tools
 This container is split into two variants, `slim` and `full`. The `slim` variant contains all of the primary simulation and testing tools needed for CD/CI hardware development and is intended to be used unattended. The `full` variant is built on top of the `slim` container and also includes additional tools that are useful when using the container for development. See the table below for additional details:
 
-|                    Tool                    |   Slim 🪶  |   Full 🔮 |
+|                                            |  Slim 🤖 |   Full 🔮 |
 |:------------------------------------------:|:--------:|:--------:|
+|                      Tag                   | `slim`, `latest` | `full` |
 |                   Base OS                  | Centos 7 | Centos 7 |
 |               Size (Compressed Download)   |  ~2.7 GB  |  ~3.3 GB  |
 |              Size (Uncompressed Local)     |  ~8.4 GB  |  ~9.8 GB  |
@@ -69,8 +70,3 @@ Here is a list of the included helper scripts in the `full` container. They are 
 
 ## 🧮 CprE 480: GPU Architecture (Iowa State)
 This container was originally created for the verifiaction of the OpenGL complient GPUs designed in this course. Thus, it purposefully includes VHDL simulation tools and Pytest support to make verification as easy as possible. For templates of lab verificaiton testbenches and automated Gitlab and Github Actions, please reach out to me either over e-mail or the alumni channel in Discord.
-
-<!-- [![Contributors over time](https://contributor-graph-api.apiseven.com/contributors-svg?chart=contributorOverTime&repo=Mluckydwyer/hw-ci)](https://www.apiseven.com/en/contributor-graph?chart=contributorOverTime&repo=Mluckydwyer/hw-ci) -->
-
-
-
