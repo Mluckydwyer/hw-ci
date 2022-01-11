@@ -2,9 +2,8 @@
 FROM centos:7 as base
 
 LABEL \
-    Maintainer="Matthew Dwyer <dwyer@iastate.edu>" \
-    Description="Hardware Verification CI Docker container" \
-    Description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW Development (+VNC)." \
+    org.opencontainers.image.title="Hardware Verification CI Docker container" \
+    org.opencontainers.image.description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW Development (+VNC)." \
     org.opencontainers.image.authors="Matthew Dwyer <dwyer@iastate.edu>" \
     org.opencontainers.image.source="https://github.com/Mluckydwyer/hw-ci"
 
