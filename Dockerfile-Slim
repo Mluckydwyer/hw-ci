@@ -1,9 +1,13 @@
 # mluckydwyer/hw-ci Docker Container
 FROM centos:7 as base
 
-LABEL Maintainer="Matthew Dwyer <dwyer@iastate.edu>"
-LABEL Name="Hardware Verification CI Docker container-Slim"
-LABEL Description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW CI regression testing."
+LABEL \
+    Maintainer="Matthew Dwyer <dwyer@iastate.edu>" \
+    Description="Hardware Verification CI Docker container" \
+    Description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW Development (+VNC)." \
+    org.opencontainers.image.authors="Matthew Dwyer <dwyer@iastate.edu>" \
+    org.opencontainers.image.source="https://github.com/Mluckydwyer/hw-ci"
+
 ENV container docker
 
 # Update Yum Repos & Update All

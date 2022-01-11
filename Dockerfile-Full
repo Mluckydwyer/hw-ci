@@ -1,12 +1,17 @@
 # mluckydwyer/hw-ci Docker Container
 FROM mluckydwyer/hw-ci:slim as slim
 
-LABEL Maintainer="Matthew Dwyer <dwyer@iastate.edu>"
-LABEL Description="Hardware Verification CI Docker container"
-LABEL Description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW Development (+VNC)."
-ENV container docker
-#ENV DISPLAY=host.docker.internal:0.0
-ENV LIBGL_ALWAYS_INDRIECT=1
+LABEL \
+    Maintainer="Matthew Dwyer <dwyer@iastate.edu>" \
+    Description="Hardware Verification CI Docker container" \
+    Description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW Development (+VNC)." \
+    org.opencontainers.image.authors="Matthew Dwyer <dwyer@iastate.edu>" \
+    org.opencontainers.image.source="https://github.com/Mluckydwyer/hw-ci"
+
+ENV \
+    container docker \
+    # DISPLAY=host.docker.internal:0.0 \
+    LIBGL_ALWAYS_INDRIECT=1
 
 
 # VSCode Remote Env
