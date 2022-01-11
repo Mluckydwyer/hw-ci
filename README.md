@@ -22,7 +22,7 @@ These containers were created for my personal hardware development projects and 
 
 
 ## 🚀 Getting Started
-To get started with this container, pull either the `slim` or `full` variants from the Docker (`slim` = `latest`):
+To get started with this container, pull either the `slim` or `full` variants from Docker (`slim` = `latest`):
 ```properties
 docker pull mluckydwyer/hw-ci:slim
 ```
