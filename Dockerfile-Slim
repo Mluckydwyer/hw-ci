@@ -28,7 +28,9 @@ RUN yum -y install gcc gcc-c++ libstdc++-devel \
     && cd /tmp/Build/Python-3.6.14 \
     && CFLAGS=-m32 LDFLAGS=-m32 ./configure --prefix /opt/Python-3.6.14 --enable-shared \
     && LD_RUN_PATH=/opt/Python-3.6.145/lib make -j 8 \
-    && make install
+    && make install \
+    && cd / \
+    && rm -rf /tmp/Build
 ENV PATH="/opt/Python-3.6.14/bin:${PATH}"
 ENV LD_LIBRARY_PATH="/opt/Python-3.6.14/lib:/opt/Python-3.6.14/share:${LD_LIBRARY_PATH}"
 ENV CPATH="/opt/Python-3.6.14/include:${CPATH}"
