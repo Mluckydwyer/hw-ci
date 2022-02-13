@@ -81,7 +81,8 @@ RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl \
     && pip3 install pyghdl \
     && cd .. \
     && rm -rf ./ghdl-1.0.0 \
-    && rm -rf /tmp/gnat
+    && rm -rf /tmp/gnat \
+    && pip3 install pyghdl
 
 # SHELL [ "/usr/bin/scl", "enable", "devtoolset-8" ]
 # RUN mkdir ghdl-1.0.0 \
