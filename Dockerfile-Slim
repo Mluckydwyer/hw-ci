@@ -10,7 +10,7 @@ LABEL \
 ENV container docker
 
 # Update Yum Repos & Update All
-RUN curl -o /tmp https://packages.endpointdev.com/endpoint-rpmsign-7.pub \
+RUN curl -o /tmp/endpoint-rpmsign-7.pub https://packages.endpointdev.com/endpoint-rpmsign-7.pub \
     && rpm --import /tmp/endpoint-rpmsign-7.pub \
     && rpm -qi gpg-pubkey-703df089 | gpg --with-fingerprint \
     && rm /tmp/endpoint-rpmsign-7.pub \
