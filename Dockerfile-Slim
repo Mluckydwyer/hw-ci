@@ -10,7 +10,11 @@ LABEL \
 ENV container docker
 
 # Update Yum Repos & Update All
-RUN yum install -y https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.9-1.x86_64.rpm \
+RUN curl -o /tmp https://packages.endpointdev.com/endpoint-rpmsign-7.pub \
+    && rpm --import /tmp/endpoint-rpmsign-7.pub \
+    && rpm -qi gpg-pubkey-703df089 | gpg --with-fingerprint \
+    && rm /tmp/endpoint-rpmsign-7.pub \
+    && yum install -y https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm \
     && yum update -y \
     && yum install -y git make epel-release
 
