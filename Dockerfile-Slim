@@ -57,7 +57,7 @@ RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl gcc 
     # && scl enable devtoolset-8 sh \
 RUN mkdir -p /opt/gnat \
     && cd /tmp \
-    && tar -xzf gnat-gpl-2017-x86_64-linux-bin.tar.gz -C /opt/gnat --strip-components=1 \
+    && tar -xzf /tmp/gnat-gpl-2017-x86_64-linux-bin.tar.gz -C /opt/gnat --strip-components=1 \
     && cd .. \
     # && mkdir gcc \
     # && curl -sSL https://codeload.github.com/gcc-mirror/gcc/tar.gz/releases/gcc-8.5.0 | tar -xz -C ./gcc --strip-components=1 \
