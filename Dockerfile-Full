@@ -7,57 +7,68 @@ LABEL \
     org.opencontainers.image.authors="Matthew Dwyer <dwyer@iastate.edu>" \
     org.opencontainers.image.source="https://github.com/Mluckydwyer/hw-ci"
 
-ENV \
-    container docker \
-    # DISPLAY=host.docker.internal:0.0 \
-    LIBGL_ALWAYS_INDRIECT=1
+ENV container docker
 
 
-# VSCode Remote Env
-FROM slim as vscode
-EXPOSE 8080
-RUN curl -sSL https://code-server.dev/install.sh | sh \
-    && mkdir -p ~/.config/code-server \
-    && touch ~/.config/code-server/config.yaml \
-    && sed -i.bak 's/auth: password/auth: none/' ~/.config/code-server/config.yaml
+# Patch CocoTB-test simulation.py with custom implementation for Modelsim complilation
+# RUN rm /opt/Python-3.6.14/lib/python3.6/site-packages/cocotb_test/simulator.py
+# COPY resources/simulator.py /opt/Python-3.6.14/lib/python3.6/site-packages/cocotb_test/simulator.py
+# EXPOSE 5678
 
-# Quality of Life Additions
-FROM vscode as qol
-RUN yum -y install wget htop sudo vim nano cmake openssl zsh teroshdl firefox dos2unix gtkwave \
-    && pip3 install matplotlib remote_pdb debugpy teroshdl yowasp-yosys vsg
-# RUN yum groupinstall "Development tools"
-
-# Command Line ZSH tools
-# RUN curl -sSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-# RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-# RUN echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>! ~/.zshrc
-# RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-# RUN echo 'source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting' >>! ~/.zshrc
-# RUN sed -i 's/_THEME=\"robbyrussel\"/_THEME=\"linuxonly\"/g' ~/.zshrc
-# RUN chsh -s /bin/zsh
-
-# RUN echo "(/usr/bin/start-code-server.sh &> /tmp/code-server.log)" >> ~/.bashrc
-
-# VNC Server for GUI applications
-FROM qol as vnc
-ENV WINDOW_MANAGER="openbox"
-EXPOSE 5900 6080
-RUN yum -y install xorg-x11-server-Xvfb x11vnc xterm openbox \
-    && pip3 install numpy \
-    && sed -ri "s/<number>4<\/number>/<number>1<\/number>/" /etc/xdg/openbox/rc.xml \
-    && git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
-    && git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify \
-    && echo "export DISPLAY=:0" >> ~/.bashrc \
-    && echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)" >> ~/.bashrc
-COPY resources/novnc-index.html /opt/novnc/index.html
-COPY resources/start-vnc-session.sh /usr/bin/
-RUN chmod +x /usr/bin/start-vnc-session.sh
+# Install VUnit
+FROM slim as vunit
+RUN pip3 install vunit_hdl
 
 
-FROM vnc as final
-ENV PATH=/workspaces/tools:$PATH
+# Install Modelsim
+FROM vunit as modelsim
+RUN yum install -y libiodbc unixODBC ncurses ncurses-libs \
+    zeromq-devel libXext alsa-lib libXtst libXft libxml2 libedit libX11 libXi \
+    glibc glibc.i686 glibc-devel.i386 libgcc.i686 libstdc++-devel.i686 libstdc++ \
+    libstdc++.i686 libXext libXext.i686 libXft libXft.i686 libXrender libXtst
+WORKDIR /tmp
+# COPY external/ModelSimSetup-20.1.1.720-linux.run /tmp/ModelSimSetup-20.1.1.720-linux.run
+RUN curl -sS -O https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run \
+RUN chmod +x ModelSimSetup-20.1.1.720-linux.run \
+    && ./ModelSimSetup-20.1.1.720-linux.run --mode unattended --installdir /opt/intelFPGA/20.1 --accept_eula 1 --modelsim_edition modelsim_ase \
+    && rm ModelSimSetup-20.1.1.720-linux.run
+ENV PATH="/opt/intelFPGA/20.1/modelsim_ase/bin:${PATH}"
+
+
+# Yosys synthesis
+# FROM slim as yosys
+# RUN mkdir /tmp/yosys \
+#     && curl -sSL https://github.com/YosysHQ/yosys/archive/refs/tags/yosys-0.14.tar.gz | tar -xz -C /tmp/yosys --strip-components=1 \
+#     && cd /tmp/yosys \
+#     && make \
+#     && make install \
+#     && rm -rf /tmp/
+
+# Add VHDL support
+
+
+# Install Symbiflow toolchain
+FROM modelsim as symbiflow
+ENV SYMBIFLOW_INSTALL_DIR=/opt/symbiflow
+ENV PATH=$SYMBIFLOW_INSTALL_DIR/xc7/:$PATH
 WORKDIR /workspaces/
-COPY ./resources /workspaces/tools
-RUN chmod +x /workspaces/tools/*.sh \
-    && chmod +rw /root/ -R
-#ENTRYPOINT /usr/bin/startup.sh
+RUN yum -y install git which xz \
+    && curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/Miniconda3-latest-Linux-x86_64.sh \
+    && sh /tmp/Miniconda3-latest-Linux-x86_64.sh -u -b -p ${SYMBIFLOW_INSTALL_DIR}/conda \
+    && git clone https://github.com/SymbiFlow/symbiflow-examples \
+    && cd symbiflow-examples \
+    && source "${SYMBIFLOW_INSTALL_DIR}/conda/etc/profile.d/conda.sh" \
+    && conda env create -f xc7/environment.yml \
+    && conda env create -f eos-s3/environment.yml \
+    && mkdir -p $SYMBIFLOW_INSTALL_DIR/{xc7,eos-s3}/install \
+    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-install-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
+    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-xc7a50t_test-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
+    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-xc7a100t_test-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
+    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-xc7a200t_test-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
+    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-xc7z010_test-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
+    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs-install/quicklogic-arch-defs-63c3d8f9.tar.gz | tar -xzC ${SYMBIFLOW_INSTALL_DIR}/eos-s3/install \
+    && rm /tmp/Miniconda3-latest-Linux-x86_64.sh
+
+FROM symbiflow as final
+WORKDIR /workspaces/
+

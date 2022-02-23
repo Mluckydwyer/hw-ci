@@ -45,7 +45,7 @@ sim_build/**
 */sim_build/**
 
 # External
-*.tar.gz
+# *.tar.gz
 
 # VCS files
 *.tab

@@ -18,14 +18,14 @@ RUN curl -o /tmp/endpoint-rpmsign-7.pub https://packages.endpointdev.com/endpoin
     && yum update -y \
     && yum install -y git make epel-release
 
-# Install Python
+# Install Python3
 FROM base as python3
 RUN yum -y install gcc gcc-c++ libstdc++-devel \
     &&  yum -y install libgcc.i686 glibc-devel.i686 glibc.i686 zlib-devel.i686 \
         readline-devel.i686 gdbm-devel.i686 openssl-devel.i686 ncurses-devel.i686 \
         tcl-devel.i686 db4-devel.i686 bzip2-devel.i686 libffi-devel.i686 \
     && mkdir /tmp/{Archive,Build} \
-    && curl -s -S -L https://www.python.org/ftp/python/3.6.14/Python-3.6.14.tgz -o /tmp/Archive/Python-3.6.14.tgz \
+    && curl -sSL https://www.python.org/ftp/python/3.6.14/Python-3.6.14.tgz -o /tmp/Archive/Python-3.6.14.tgz \
     && tar xzvf /tmp/Archive/Python-3.6.14.tgz -C /tmp/Build \
     && rm /tmp/Archive/Python-3.6.14.tgz \
     && mkdir -p /opt/Python-3.6.14 \
@@ -41,62 +41,45 @@ ENV CPATH="/opt/Python-3.6.14/include:${CPATH}"
 RUN pip3 install --upgrade pip setuptools \
     && pip3 install wheel
 
-# Patch CocoTB-test simulation.py with custom implementation for Modelsim complilation
-# RUN rm /opt/Python-3.6.14/lib/python3.6/site-packages/cocotb_test/simulator.py
-# COPY resources/simulator.py /opt/Python-3.6.14/lib/python3.6/site-packages/cocotb_test/simulator.py
-# EXPOSE 5678
-
-# Install VUnit
-FROM python3 as vunit
-RUN pip3 install vunit_hdl
-
-# Install Modelsim
-FROM vunit as modelsim
-RUN yum install -y libiodbc unixODBC ncurses ncurses-libs \
-    zeromq-devel libXext alsa-lib libXtst libXft libxml2 libedit libX11 libXi \
-    glibc glibc.i686 glibc-devel.i386 libgcc.i686 libstdc++-devel.i686 libstdc++ \
-    libstdc++.i686 libXext libXext.i686 libXft libXft.i686 libXrender libXtst
-WORKDIR /tmp
-RUN curl -s -S -O https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run \
-    && chmod +x ModelSimSetup-20.1.1.720-linux.run \
-    && ./ModelSimSetup-20.1.1.720-linux.run --mode unattended --installdir /opt/intelFPGA/20.1 --accept_eula 1 --modelsim_edition modelsim_ase \
-    && rm ModelSimSetup-20.1.1.720-linux.run
-ENV PATH="/opt/intelFPGA/20.1/modelsim_ase/bin:${PATH}"
-
 
 # Install Verilator
-FROM modelsim as verilator
+FROM python3 as verilator
 RUN yum -y install verilator
 
 # Install GHDL
 FROM verilator as ghdl
 ENV OG_PATH=$PATH
 ENV PATH=/opt/gnat/bin:$PATH
-RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl \
-    && yum install -y devtoolset-8 texinfo \
-    && mkdir -p /tmp/gnat \
-    && curl -s -S -L https://community.download.adacore.com/v1/9682e2e1f2f232ce03fe21d77b14c37a0de5649b?filename=gnat-gpl-2017-x86_64-linux-bin.tar.gz | tar -xz -C /tmp/gnat --strip-components=1 \
-    && cd /tmp/gnat \
-    && make ins-all prefix="/opt/gnat" \
+COPY external/gnat-gpl-2017-x86_64-linux-bin.tar.gz /tmp/gnat-gpl-2017-x86_64-linux-bin.tar.gz
+RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl gcc gcc-c++ libstdc++-devel swig python-devel glibc.i686 glibc-devel.i386 libgcc.i686 libstdc++-devel.i686 \
+    && yum install -y texinfo
+# SHELL [ "/usr/bin/scl", "enable", "devtoolset-8" ] 
+    # && scl enable devtoolset-8 sh \
+RUN mkdir -p /opt/gnat \
+    && cd /tmp \
+    && tar -xzf gnat-gpl-2017-x86_64-linux-bin.tar.gz -C /opt/gnat --strip-components=1 \
+    && cd .. \
+    # && mkdir gcc \
+    # && curl -sSL https://codeload.github.com/gcc-mirror/gcc/tar.gz/releases/gcc-8.5.0 | tar -xz -C ./gcc --strip-components=1 \
+    # && cd gcc \
+    # && sed -i.bak s/ftp:/http:/g contrib/download_prerequisites \
+    # && ./contrib/download_prerequisites \
+    && cd .. \
     && mkdir ghdl-1.0.0 \
     && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1 \
     && cd ghdl-1.0.0 \
-    && ./configure --prefix=/usr/local \
-    && make -j 4 \
-    && make install \
+    # && ./configure --with-gcc=../gcc --disable-werror --prefix=/usr/local \
+    && ./configure --disable-werror --prefix=/usr/local \
+    # && make copy-sources \
+    # && mkdir gcc-objs \
+    # && cd gcc-objs \
+    # && ../../gcc/configure --prefix=/usr/local --enable-languages=c,c++,vhdl --disable-bootstrap --disable-lto --disable-multilib --disable-libssp --disable-libgomp --disable-libquadmath \
+    # && make -j4 \
+    # && make install \
     && pip3 install pyghdl \
-    && cd .. \
-    && rm -rf ./ghdl-1.0.0 \
-    && rm -rf /tmp/gnat \
+    && cd / \
+    && rm -rf /tmp \
     && pip3 install pyghdl
-
-# SHELL [ "/usr/bin/scl", "enable", "devtoolset-8" ]
-# RUN mkdir ghdl-1.0.0 \
-#     && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1
-# WORKDIR ghdl-1.0.0
-# RUN ./configure --prefix=/usr/local \
-#     && make -j 4 \
-#     && make install
 ENV PATH=$OG_PATH
 
 # Install CocoTb
