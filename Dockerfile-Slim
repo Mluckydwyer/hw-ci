@@ -59,23 +59,10 @@ RUN mkdir -p /opt/gnat \
     && cd /tmp \
     && tar -xzf /tmp/gnat-gpl-2017-x86_64-linux-bin.tar.gz -C /opt/gnat --strip-components=1 \
     && cd .. \
-    # && mkdir gcc \
-    # && curl -sSL https://codeload.github.com/gcc-mirror/gcc/tar.gz/releases/gcc-8.5.0 | tar -xz -C ./gcc --strip-components=1 \
-    # && cd gcc \
-    # && sed -i.bak s/ftp:/http:/g contrib/download_prerequisites \
-    # && ./contrib/download_prerequisites \
-    && cd .. \
     && mkdir ghdl-1.0.0 \
     && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1 \
     && cd ghdl-1.0.0 \
-    # && ./configure --with-gcc=../gcc --disable-werror --prefix=/usr/local \
     && ./configure --disable-werror --prefix=/usr/local \
-    # && make copy-sources \
-    # && mkdir gcc-objs \
-    # && cd gcc-objs \
-    # && ../../gcc/configure --prefix=/usr/local --enable-languages=c,c++,vhdl --disable-bootstrap --disable-lto --disable-multilib --disable-libssp --disable-libgomp --disable-libquadmath \
-    # && make -j4 \
-    # && make install \
     && pip3 install pyghdl \
     && cd / \
     && rm -rf /tmp \
