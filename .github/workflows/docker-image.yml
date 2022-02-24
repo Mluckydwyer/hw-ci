@@ -35,7 +35,7 @@ jobs:
         file: ./Dockerfile-Slim
         push: true
         tags: mluckydwyer/hw-ci:slim,ghcr.io/mluckydwyer/hw-ci:slim
-        cache-from: type=registry,ref=mluckydwyer/hw-ci:buildcache
+        # cache-from: type=registry,ref=mluckydwyer/hw-ci:buildcache
         cache-to: type=registry,ref=mluckydwyer/hw-ci:buildcache,mode=max
   build-full:
     name: "Build full container"
