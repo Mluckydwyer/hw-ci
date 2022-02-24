@@ -53,20 +53,19 @@ ENV PATH=/opt/gnat/bin:$PATH
 COPY external/gnat-gpl-2017-x86_64-linux-bin.tar.gz /tmp/gnat-gpl-2017-x86_64-linux-bin.tar.gz
 RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl gcc gcc-c++ libstdc++-devel swig python-devel glibc.i686 glibc-devel.i386 libgcc.i686 libstdc++-devel.i686 \
     && yum install -y texinfo
-# RUN mkdir -p /opt/gnat \
-#     && cd /tmp \
-#     && tar -xzf /tmp/gnat-gpl-2017-x86_64-linux-bin.tar.gz -C /opt/gnat --strip-components=1 \
-#     && cd ..
-
-# RUN mkdir ghdl-1.0.0 \
-#     && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1 \
-#     && cd ghdl-1.0.0 \
-#     && ./configure --disable-werror --prefix=/usr/local \
-#     && pip3 install pyghdl \
-#     && cd / \
-#     && rm -rf /tmp \
-#     && pip3 install pyghdl
-# ENV PATH=$OG_PATH
+RUN mkdir -p /opt/gnat \
+    && cd /tmp \
+    && tar -xzf /tmp/gnat-gpl-2017-x86_64-linux-bin.tar.gz -C /opt/gnat --strip-components=1 \
+    && cd .. \
+    && mkdir ghdl-1.0.0 \
+    && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1 \
+    && cd ghdl-1.0.0 \
+    && ./configure --disable-werror --prefix=/usr/local \
+    && pip3 install pyghdl \
+    && cd / \
+    && rm -rf /tmp \
+    && pip3 install pyghdl
+ENV PATH=$OG_PATH
 
 # Install CocoTb
 FROM ghdl as cocotb
