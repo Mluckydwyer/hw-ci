@@ -49,12 +49,13 @@ RUN yum -y install verilator
 # Install GHDL
 FROM verilator as ghdl
 ENV OG_PATH=$PATH
-ENV PATH=/opt/gnat/bin:$PATH
+ENV PATH=/tmp/gnat/bin:$PATH
 RUN yum -y install bzip2 curl flex fontconfig zlib-devel centos-release-scl gcc gcc-c++ libstdc++-devel swig python-devel glibc.i686 glibc-devel.i386 libgcc.i686 libstdc++-devel.i686 \
     && yum install -y texinfo
 RUN mkdir -p /tmp/gnat \
     && cd /tmp \
-    && curl -sSL https://hchvba.dm.files.1drv.com/y4mA1UGAe9IA9O37PH7tD5_m_fDEwwsIytbH5YeQ68D-TTbU99h2_SOsPYoZ2X4fWewc69nwBeYBfq6aWiOmKa184HbiiH6tThYOEM3iRDbTIXyCdvbJ2fOFhjsbYZrazSUD53ZglI71KX0J9Z0VmiWHqgo_rneUVQdYYpSTiZzatnvJgcLtai1Ve4hxFSiqlt_LncJ2w7iVAhzJ_aBqPlHGQ | tar -xz -C /tmp/gnat --strip-components=1 \
+    && curl -sSL https://hchvba.dm.files.1drv.com/y4mA1UGAe9IA9O37PH7tD5_m_fDEwwsIytbH5YeQ68D-TTbU99h2_SOsPYoZ2X4fWewc69nwBeYBfq6aWiOmKa184HbiiH6tThYOEM3iRDbTIXyCdvbJ2fOFhjsbYZrazSUD53ZglI71KX0J9Z0VmiWHqgo_rneUVQdYYpSTiZzatnvJgcLtai1Ve4hxFSiqlt_LncJ2w7iVAhzJ_aBqPlHGQ | \
+       tar -xz -C /tmp/gnat --strip-components=1 \
     && cd .. \
     && mkdir ghdl-1.0.0 \
     && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1 \
