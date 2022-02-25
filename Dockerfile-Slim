@@ -81,7 +81,7 @@ RUN pip3 install glob2 coverage cocotb cocotb_bus cocotb-test cocotb-coverage co
 # WORKDIR /home/coder
 
 FROM cocotb as final
-RUN mkdir -p /workspaces/logs
+# RUN mkdir -p /workspaces/logs
 WORKDIR /workspaces/
 #ENTRYPOINT /usr/bin/startup.sh
-RUN chmod +rw /root/ -R
+# RUN chmod +rw /root/ -R
