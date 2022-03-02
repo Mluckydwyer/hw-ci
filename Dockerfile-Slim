@@ -61,6 +61,8 @@ RUN mkdir -p /tmp/gnat \
     && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v2.0.0.tar.gz | tar -xz -C ./ghdl-2.0.0 --strip-components=1 \
     && cd ghdl-2.0.0 \
     && ./configure --disable-werror --prefix=/usr/local \
+    && make -j4 \
+    && make install \
     && pip3 install pyghdl \
     && cd / \
     && rm -rf /tmp/* \
