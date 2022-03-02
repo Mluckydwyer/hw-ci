@@ -63,7 +63,7 @@ RUN mkdir -p /tmp/gnat \
     && ./configure --disable-werror --prefix=/usr/local \
     && pip3 install pyghdl \
     && cd / \
-    && rm -rf /tmp \
+    && rm -rf /tmp/* \
     && pip3 install pyghdl
 ENV PATH=$OG_PATH
 
