@@ -51,7 +51,8 @@ FROM modelsim as symbiflow
 ENV SYMBIFLOW_INSTALL_DIR=/opt/symbiflow
 ENV PATH=$SYMBIFLOW_INSTALL_DIR/xc7/:$PATH
 WORKDIR /workspaces/
-RUN yum -y install git which xz \
+RUN mkdir -p $SYMBIFLOW_INSTALL_DIR/{xc7,eos-s3}/install \
+    && yum -y install git which xz \
     && curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/Miniconda3-latest-Linux-x86_64.sh \
     && sh /tmp/Miniconda3-latest-Linux-x86_64.sh -u -b -p ${SYMBIFLOW_INSTALL_DIR}/conda \
     && git clone https://github.com/SymbiFlow/symbiflow-examples \
@@ -59,13 +60,6 @@ RUN yum -y install git which xz \
     && source "${SYMBIFLOW_INSTALL_DIR}/conda/etc/profile.d/conda.sh" \
     && conda env create -f xc7/environment.yml \
     && conda env create -f eos-s3/environment.yml \
-    && mkdir -p $SYMBIFLOW_INSTALL_DIR/{xc7,eos-s3}/install \
-    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-install-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
-    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-xc7a50t_test-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
-    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-xc7a100t_test-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
-    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-xc7a200t_test-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
-    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/535/20220128-000432/symbiflow-arch-defs-xc7z010_test-5fa5e715.tar.xz | tar -xJC ${SYMBIFLOW_INSTALL_DIR}/xc7/install \
-    && curl -sSL https://storage.googleapis.com/symbiflow-arch-defs-install/quicklogic-arch-defs-63c3d8f9.tar.gz | tar -xzC ${SYMBIFLOW_INSTALL_DIR}/eos-s3/install \
     && rm /tmp/Miniconda3-latest-Linux-x86_64.sh
 
 FROM symbiflow as final
