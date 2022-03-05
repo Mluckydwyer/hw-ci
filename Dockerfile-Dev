@@ -60,4 +60,4 @@ WORKDIR /workspaces/
 COPY ./resources /workspaces/tools
 RUN chmod +x /workspaces/tools/*.sh \
     && chmod +rw /root/ -R
-#ENTRYPOINT /usr/bin/startup.sh
+ENTRYPOINT /usr/bin/startup.sh
