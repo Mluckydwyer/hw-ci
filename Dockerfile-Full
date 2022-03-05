@@ -34,18 +34,6 @@ RUN curl -sS -O https://download.altera.com/akdlm/software/acdsinst/20.1std.1/72
 ENV PATH="/opt/intelFPGA/20.1/modelsim_ase/bin:${PATH}"
 
 
-# Yosys synthesis
-# FROM slim as yosys
-# RUN mkdir /tmp/yosys \
-#     && curl -sSL https://github.com/YosysHQ/yosys/archive/refs/tags/yosys-0.14.tar.gz | tar -xz -C /tmp/yosys --strip-components=1 \
-#     && cd /tmp/yosys \
-#     && make \
-#     && make install \
-#     && rm -rf /tmp/
-
-# Add VHDL support
-
-
 # Install Symbiflow toolchain
 FROM modelsim as symbiflow
 ENV SYMBIFLOW_INSTALL_DIR=/opt/symbiflow

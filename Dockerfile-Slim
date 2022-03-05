@@ -57,13 +57,15 @@ RUN mkdir -p /tmp/gnat \
     && curl -sSL https://hchvba.dm.files.1drv.com/y4mA1UGAe9IA9O37PH7tD5_m_fDEwwsIytbH5YeQ68D-TTbU99h2_SOsPYoZ2X4fWewc69nwBeYBfq6aWiOmKa184HbiiH6tThYOEM3iRDbTIXyCdvbJ2fOFhjsbYZrazSUD53ZglI71KX0J9Z0VmiWHqgo_rneUVQdYYpSTiZzatnvJgcLtai1Ve4hxFSiqlt_LncJ2w7iVAhzJ_aBqPlHGQ | \
        tar -xz -C /tmp/gnat --strip-components=1 \
     && cd .. \
-    && mkdir ghdl-1.0.0 \
-    && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v1.0.0.tar.gz | tar -xz -C ./ghdl-1.0.0 --strip-components=1 \
-    && cd ghdl-1.0.0 \
+    && mkdir -p ghdl-2.0.0 \
+    && curl -sSL https://github.com/ghdl/ghdl/archive/refs/tags/v2.0.0.tar.gz | tar -xz -C ./ghdl-2.0.0 --strip-components=1 \
+    && cd ghdl-2.0.0 \
     && ./configure --disable-werror --prefix=/usr/local \
+    && make -j4 \
+    && make install \
     && pip3 install pyghdl \
     && cd / \
-    && rm -rf /tmp \
+    && rm -rf /tmp/* \
     && pip3 install pyghdl
 ENV PATH=$OG_PATH
 
