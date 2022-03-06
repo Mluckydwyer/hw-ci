@@ -74,8 +74,20 @@ Here is a list of the included helper scripts in the `full` and `dev` containers
 - `startup`: This script runs on startup of the `dev` container and starts noVNC, VNC, and the VSCode server in the background
 
 
+### LLVM & GCC (Devtoolsets)
+Included in the `dev` container is the LLVM 11.0 and GCC 10 toolsets. While they are installed, one must enable them using `scl`. The following are some sample ways to enable the devtool sets:
+```properties
+scl enable devtoolset-10 'sh'
+scl enable devtoolset-10 'bash'
+scl enable devtoolset-10 'gcc hello.c -c hello'
+
+scl enable llvm-toolset-11.0 'sh'
+scl enable llvm-toolset-11.0 'bash'
+scl enable llvm-toolset-11.0 'clang hello.c -c hello'
+```
+
 ### 🖥️ VNC & noVNC
-The `dev` container includes tools to assist with visual applications such as Modelsim and GTKWave. On port `8000`, the container launches a Python webserver to serve the noVNC page. After navigating to this page, you are able to view and interact with any GUI applications from any web browser. VNC connections are also supported by the VNC server running at port `5900`.
+The `dev` container includes tools to assist with visual applications such as Modelsim and GTKWave. On port `8000`, the container launches a Python webserver to serve the noVNC page. After navigating to this page, you are able to view and interact with any GUI applications from any web browser. VNC connections are also supported by the VNC server running at port `5900` (The `openbox` window manager is used in this workflow).
 
 ### ⌨️ VSCode
 A VScode server is also installed on the `dev` container, although it appears that VSCode continues to install its own server anyways upon connections. This has not been tested, but reguardless should function as desired.

@@ -13,19 +13,32 @@ ENV \
     LIBGL_ALWAYS_INDRIECT=1
 
 
+# General Development Tools
+FROM full as dev-tools
+# RUN yum groupinstall "Development tools"
+RUN yum -y install centos-release-scl centos-release-scl-rh bash
+RUN yum -y install devtoolset-10 llvm-toolset-11.0
+# RUN scl enable devtoolset-10 'sh' \
+#     scl enable llvm-toolset-11.0 'sh' \
+#     scl enable devtoolset-10 'bash' \
+#     scl enable llvm-toolset-11.0 'bash'
+
+
+# Quality of Life Additions
+FROM dev-tools as qol
+RUN yum -y install bash wget htop sudo vim nano cmake openssl teroshdl firefox dos2unix gtkwave \
+    && pip3 install matplotlib remote_pdb debugpy teroshdl yowasp-yosys vsg
+
+
 # VSCode Remote Env
-FROM full as vscode
+FROM qol as vscode
 EXPOSE 8080
 RUN curl -sSL https://code-server.dev/install.sh | sh \
     && mkdir -p ~/.config/code-server \
     && touch ~/.config/code-server/config.yaml \
     && sed -i.bak 's/auth: password/auth: none/' ~/.config/code-server/config.yaml
+# RUN echo "(/usr/bin/start-code-server.sh &> /tmp/code-server.log)" >> ~/.bashrc
 
-# Quality of Life Additions
-FROM vscode as qol
-RUN yum -y install bash wget htop sudo vim nano cmake openssl zsh teroshdl firefox dos2unix gtkwave \
-    && pip3 install matplotlib remote_pdb debugpy teroshdl yowasp-yosys vsg
-# RUN yum groupinstall "Development tools"
 
 # Command Line ZSH tools
 # RUN curl -sSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
@@ -36,7 +49,6 @@ RUN yum -y install bash wget htop sudo vim nano cmake openssl zsh teroshdl firef
 # RUN sed -i 's/_THEME=\"robbyrussel\"/_THEME=\"linuxonly\"/g' ~/.zshrc
 # RUN chsh -s /bin/zsh
 
-# RUN echo "(/usr/bin/start-code-server.sh &> /tmp/code-server.log)" >> ~/.bashrc
 
 # VNC Server for GUI applications
 FROM qol as vnc
