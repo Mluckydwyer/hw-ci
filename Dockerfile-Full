@@ -51,7 +51,8 @@ RUN mkdir -p $SYMBIFLOW_INSTALL_DIR/{xc7,eos-s3}/install \
     && rm /tmp/Miniconda3-latest-Linux-x86_64.sh
 
 FROM symbiflow as final
-COPY ./resources/*symbiflow*.sh /workspaces/tools
+RUN mkdir /workspaces/tools
+COPY ./resources/*symbiflow /workspaces/tools
 RUN chmod +x /workspaces/tools/*.sh \
     && chmod +rw /root/ -R
 WORKDIR /workspaces/
