@@ -52,7 +52,7 @@ RUN mkdir -p $SYMBIFLOW_INSTALL_DIR/{xc7,eos-s3}/install \
 
 FROM symbiflow as final
 RUN mkdir /workspaces/tools
-COPY ./resources/*symbiflow /workspaces/tools
+COPY ./resources/*.sh /workspaces/tools/
 RUN chmod +x /workspaces/tools/*.sh \
     && chmod +rw /root/ -R
 WORKDIR /workspaces/
