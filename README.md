@@ -46,6 +46,7 @@ This container is split into three variants, `slim`, `full`, and `dev`. The `sli
 |           GCC 10 + LLVM 11 + Make          |          |     ✅    |     ✅    |
 |         Modelsim 20.1.1.720 (Intel)        |          |     ✅    |     ✅    |
 |    Symbiflow with XC7 & EOS-S3 Support     |          |     ✅    |     ✅    |
+|                  Miniconda                 |          |     ✅    |     ✅    |
 |                    VUnit                   |          |     ✅    |     ✅    |
 |         Symbiflow Tool Helper Scripts      |          |     ✅    |     ✅    |
 |             Yowasp-Yosys + VSG             |          |          |     ✅    |
