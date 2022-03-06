@@ -6,7 +6,7 @@
 		//"terminal.integrated.shell.linux": "/bin/bash",
         "terminal.integrated.profiles.linux": {
             "default": {
-              "path": "zsh",
+              "path": "bash",
               "args": ["-l"]
             }
           },
