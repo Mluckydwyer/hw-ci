@@ -27,7 +27,7 @@ These containers can also be found on the Github Container Registry:
 docker pull ghcr.io/mluckydwyer/hw-ci:slim
 ```
 
-This container also has support for VScode Development Containers and Github Code Spaces. In both cases, the `dev` variant will be used, as it is intended for development and includes additional tools (See the _Tools_ sections for more details).
+This repository also has support for VScode Development Containers and Github Code Spaces. In both cases, the `dev` variant will be used, as it is intended for development and includes additional tools (See the _Tools_ sections for more details).
 
 
 ## 🛠️ Tools
