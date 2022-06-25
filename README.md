@@ -40,6 +40,7 @@ This container is split into three variants, `slim`, `full`, and `dev`. The `sli
 |               Size (Compressed Download)   | <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/slim?label=Image%20Size%20%28Slim%29"></a>  |  <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/full?label=Image%20Size%20%28Full%29"></a>  | <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/dev?label=Image%20Size%20%28Dev%29"></a> |
 |                  Verilator                 |     ✅    |     ✅    |     ✅    |
 |                    GHDL                    |     ✅    |     ✅    |     ✅    |
+|               Makepp, GNU M4               |     ✅    |     ✅    |     ✅    |
 | CocoTB + AXI, Coverage, and Pytest Plugins |     ✅    |     ✅    |     ✅    |
 |                Python 3.6.14               |     ✅    |     ✅    |     ✅    |
 |              Pytest + Plugins              |     ✅    |     ✅    |     ✅    |
