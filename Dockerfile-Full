@@ -21,21 +21,21 @@ RUN pip3 install vunit_hdl
 
 
 # Install Modelsim
-FROM vunit as modelsim
-RUN yum install -y libiodbc unixODBC ncurses ncurses-libs \
-    zeromq-devel libXext alsa-lib libXtst libXft libxml2 libedit libX11 libXi \
-    glibc glibc.i686 glibc-devel.i386 libgcc.i686 libstdc++-devel.i686 libstdc++ \
-    libstdc++.i686 libXext libXext.i686 libXft libXft.i686 libXrender libXtst
-WORKDIR /tmp
-RUN curl -sS -O https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run \
-    && chmod +x ModelSimSetup-20.1.1.720-linux.run \
-    && ./ModelSimSetup-20.1.1.720-linux.run --mode unattended --installdir /opt/intelFPGA/20.1 --accept_eula 1 --modelsim_edition modelsim_ase \
-    && rm ModelSimSetup-20.1.1.720-linux.run
-ENV PATH="/opt/intelFPGA/20.1/modelsim_ase/bin:${PATH}"
+# FROM vunit as modelsim
+# RUN yum install -y libiodbc unixODBC ncurses ncurses-libs \
+#     zeromq-devel libXext alsa-lib libXtst libXft libxml2 libedit libX11 libXi  \
+#     glibc glibc.i686 glibc-devel.i386 libgcc.i686 libstdc++-devel.i686 libstdc++ \
+#     libstdc++.i686 libXext libXext.i686 libXft libXft.i686 libXrender libXtst
+# WORKDIR /tmp
+# RUN curl -sS -O https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run \
+#     && chmod +x ModelSimSetup-20.1.1.720-linux.run \
+#     && ./ModelSimSetup-20.1.1.720-linux.run --mode unattended --installdir /opt/intelFPGA/20.1 --accept_eula 1 --modelsim_edition modelsim_ase \
+#     && rm ModelSimSetup-20.1.1.720-linux.run
+# ENV PATH="/opt/intelFPGA/20.1/modelsim_ase/bin:${PATH}"
 
 
 # Install Symbiflow toolchain
-FROM modelsim as symbiflow
+FROM vunit as symbiflow
 ENV SYMBIFLOW_INSTALL_DIR=/opt/symbiflow
 ENV PATH=$SYMBIFLOW_INSTALL_DIR/xc7/:$PATH
 WORKDIR /workspaces/
