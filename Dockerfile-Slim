@@ -41,7 +41,6 @@ ENV CPATH="/opt/Python-3.6.14/include:${CPATH}"
 RUN pip3 install --upgrade pip setuptools \
     && pip3 install wheel
 
-
 # Install Verilator
 FROM python3 as verilator
 RUN yum -y install verilator
@@ -75,6 +74,18 @@ RUN pip3 install glob2 coverage cocotb cocotb_bus cocotb-test cocotb-coverage co
                  pytest pytest-parallel pytest-xdist pytest-html pytest-sugar pytest-randomly \
                  pytest-emoji pytest-icdiff pytest-asyncio pytest-rerunfailures pytest-repeat
 
+
+# Makepp + M4
+FROM cocotb as makepp
+RUN yum -y install make perl perl-Digest-MD5 m4 \
+    && mkdir /tmp/{Archive,Build} \
+    && curl -sSL https://versaweb.dl.sourceforge.net/project/makepp/2.0/makepp-2.0.tgz -o /tmp/Archive/makepp-2.0.tgz \
+    && tar xzvf /tmp/Archive/makepp-2.0.tgz -C /tmp/Build \
+    && cd /tmp/Build/makepp-2.0 \
+    && ./configure --prefix=/usr/local \
+    && make install \
+    && rm -rf /tmp/*
+
 # User [coder:coder]
 # RUN useradd -ms /bin/bash coder -m -G wheel,root -p "$(openssl passwd -1 coder)"
 # RUN usermod -aG wheel coder
@@ -82,7 +93,7 @@ RUN pip3 install glob2 coverage cocotb cocotb_bus cocotb-test cocotb-coverage co
 # ENV USER=coder
 # WORKDIR /home/coder
 
-FROM cocotb as final
+FROM makepp as final
 # RUN mkdir -p /workspaces/logs
 WORKDIR /workspaces/
 # RUN chmod +rw /root/ -R
