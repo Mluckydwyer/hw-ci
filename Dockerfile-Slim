@@ -20,7 +20,7 @@ RUN curl -o /tmp/endpoint-rpmsign-7.pub https://packages.endpointdev.com/endpoin
 
 # Install Python3
 FROM base as python3
-EVN PYTHON_VER=3.8.13
+ENV PYTHON_VER=3.9.13
 RUN yum -y install gcc gcc-c++ libstdc++-devel \
     &&  yum -y install libgcc.i686 glibc-devel.i686 glibc.i686 zlib-devel.i686 \
         readline-devel.i686 gdbm-devel.i686 openssl-devel.i686 ncurses-devel.i686 \
