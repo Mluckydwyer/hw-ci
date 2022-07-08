@@ -42,10 +42,10 @@ This container is split into three variants, `slim`, `full`, and `dev`. The `sli
 |                    GHDL                    |     ✅    |     ✅    |     ✅    |
 |               Makepp, GNU M4               |     ✅    |     ✅    |     ✅    |
 | CocoTB + AXI, Coverage, and Pytest Plugins |     ✅    |     ✅    |     ✅    |
-|                Python 3.6.14               |     ✅    |     ✅    |     ✅    |
+|                Python 3.9.13               |     ✅    |     ✅    |     ✅    |
 |              Pytest + Plugins              |     ✅    |     ✅    |     ✅    |
 |           GCC 10 + LLVM 11 + Make          |          |     ✅    |     ✅    |
-|         Modelsim 20.1.1.720 (Intel)        |          |     ✅    |     ✅    |
+|         Questasim 22.2.0.94 (Intel)        |          |     ✅    |     ✅    |
 |    Symbiflow with XC7 & EOS-S3 Support     |          |     ✅    |     ✅    |
 |                  Miniconda                 |          |     ✅    |     ✅    |
 |                    VUnit                   |          |     ✅    |     ✅    |
