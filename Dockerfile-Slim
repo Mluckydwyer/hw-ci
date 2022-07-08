@@ -20,24 +20,25 @@ RUN curl -o /tmp/endpoint-rpmsign-7.pub https://packages.endpointdev.com/endpoin
 
 # Install Python3
 FROM base as python3
+EVN PYTHON_VER=3.8.13
 RUN yum -y install gcc gcc-c++ libstdc++-devel \
     &&  yum -y install libgcc.i686 glibc-devel.i686 glibc.i686 zlib-devel.i686 \
         readline-devel.i686 gdbm-devel.i686 openssl-devel.i686 ncurses-devel.i686 \
         tcl-devel.i686 db4-devel.i686 bzip2-devel.i686 libffi-devel.i686 \
     && mkdir /tmp/{Archive,Build} \
-    && curl -sSL https://www.python.org/ftp/python/3.6.14/Python-3.6.14.tgz -o /tmp/Archive/Python-3.6.14.tgz \
-    && tar xzvf /tmp/Archive/Python-3.6.14.tgz -C /tmp/Build \
-    && rm /tmp/Archive/Python-3.6.14.tgz \
-    && mkdir -p /opt/Python-3.6.14 \
-    && cd /tmp/Build/Python-3.6.14 \
-    && CFLAGS=-m32 LDFLAGS=-m32 ./configure --prefix /opt/Python-3.6.14 --enable-shared \
-    && LD_RUN_PATH=/opt/Python-3.6.145/lib make -j 8 \
+    && curl -sSL https://www.python.org/ftp/python/${PYTHON_VER}/Python-${PYTHON_VER}.tgz -o /tmp/Archive/Python-${PYTHON_VER}.tgz \
+    && tar xzvf /tmp/Archive/Python-${PYTHON_VER}.tgz -C /tmp/Build \
+    && rm /tmp/Archive/Python-${PYTHON_VER}.tgz \
+    && mkdir -p /opt/Python-${PYTHON_VER} \
+    && cd /tmp/Build/Python-${PYTHON_VER} \
+    && CFLAGS=-m32 LDFLAGS=-m32 ./configure --prefix /opt/Python-${PYTHON_VER} --enable-shared \
+    && LD_RUN_PATH=/opt/Python-${PYTHON_VER}/lib make -j 8 \
     && make install \
     && cd / \
     && rm -rf /tmp/Build
-ENV PATH="/opt/Python-3.6.14/bin:${PATH}"
-ENV LD_LIBRARY_PATH="/opt/Python-3.6.14/lib:/opt/Python-3.6.14/share:${LD_LIBRARY_PATH}"
-ENV CPATH="/opt/Python-3.6.14/include:${CPATH}"
+ENV PATH="/opt/Python-${PYTHON_VER}/bin:${PATH}"
+ENV LD_LIBRARY_PATH="/opt/Python-${PYTHON_VER}/lib:/opt/Python-${PYTHON_VER}/share:${LD_LIBRARY_PATH}"
+ENV CPATH="/opt/Python-${PYTHON_VER}/include:${CPATH}"
 RUN pip3 install --upgrade pip setuptools \
     && pip3 install wheel
 
@@ -71,8 +72,8 @@ ENV PATH=$OG_PATH
 # Install CocoTb
 FROM ghdl as cocotb
 RUN pip3 install glob2 coverage cocotb cocotb_bus cocotb-test cocotb-coverage cocotbext-axi python-constraint \
-                 pytest pytest-parallel pytest-xdist pytest-html pytest-sugar pytest-randomly \
-                 pytest-emoji pytest-icdiff pytest-asyncio pytest-rerunfailures pytest-repeat
+                 pytest pytest-parallel pytest-xdist pytest-html pytest-sugar pytest-randomly pytest-emoji \
+                 pytest-icdiff pytest-asyncio pytest-rerunfailures pytest-repeat fixedpoint
 
 
 # Makepp + M4
