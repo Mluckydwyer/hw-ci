@@ -3,7 +3,7 @@
 <p align="center">
   <a title="Source code on GitHub" href="https://github.com/Mluckydwyer/hw-ci"><img src="https://img.shields.io/badge/Mluckydwyer-hw–ci-blueviolet.svg?longCache=true&logo=GitHub"></a><!--
   -->
-    <a title="Containers on Docker" href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img src="https://img.shields.io/badge/dockerhub-images-blue.svg?longCache=true&logo=Docker"></a><!--
+    <a title="Containers on Docker" href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img src="https://img.shields.io/badge/Docker-Hub-images-blue.svg?longCache=true&logo=Docker"></a><!--
   -->
     <a title="Containers on GhCR" href="https://github.com/Mluckydwyer/hw-ci/pkgs/container/hw-ci"><img src="https://img.shields.io/badge/Github-images-blue.svg?longCache=true&logo=GitLFS"></a><!--
   -->
