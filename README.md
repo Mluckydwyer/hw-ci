@@ -5,7 +5,8 @@
   -->
   <a title="Builds" href="https://github.com/Mluckydwyer/hw-ci/actions"><img src="https://github.com/Mluckydwyer/hw-ci/actions/workflows/docker-image.yml/badge.svg"></a><!--
   -->
-  <a title="Open in VSCode" href="https://open.vscode.dev/Mluckydwyer/hw-ci"><img src="https://open.vscode.dev/badges/open-in-vscode.svg"></a><!--
+  <a title="Open in VSCode" href="https://open.vscode.dev/Mluckydwyer/hw-ci"><img src="https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=007acc&logoColor=007acc
+"></a><!--
   -->
   <!-- <br>
   <a title="CentOS" href="https://www.centos.org/"><img src="https://img.shields.io/badge/cent%20os-002260?style=for-the-badge&logo=centos&logoColor=F0F0F0"></a>
