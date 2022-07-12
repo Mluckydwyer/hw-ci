@@ -71,7 +71,7 @@ This container is split into three variants, `slim`, `full`, and `dev`. The `sli
 
 ### 📜 Helper Scripts
 Here is a list of the included helper scripts in the `full` and `dev` containers. They are included on the system path and can be run from anyhere:
-- `start-modelsim`: Open Modelsim in GUI mode.
+- `start-modelsim`: Open Questa in GUI mode. The `LM_LICENCE_FILE` environment variable must contain the path to the license file you obtained from Intel.
 - `start-vnc-session`: Start the NoVNC server (VNC can be accessed on port 5090, NoVNC webserver can be accessed at localhost:6080 @1080p).
 - `start-code-server`: Start the VSCode remote server (Can also be done by opening the container in VSCode).
 - `enable-symbiflow-xc7`: Activate the Symbiflow XC7 Conda envrionment

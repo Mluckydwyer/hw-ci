@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/opt/intelFPGA/20.1/modelsim_ase/bin/vsim &> /tmp/modelsim.log
+/opt/intelFPGA/22.2/questa_fse/bin/vsim &> /tmp/modelsim.log
