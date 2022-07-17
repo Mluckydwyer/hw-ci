@@ -3,7 +3,7 @@ FROM mluckydwyer/hw-ci:slim as slim
 
 LABEL \
     org.opencontainers.image.title="Hardware Verification CI Docker container" \
-    org.opencontainers.image.description="Modelsim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW Development (+VNC)." \
+    org.opencontainers.image.description="Questa Sim, Verilator, GHDL, VUnit, CocoTB, and Pytest for HW Development (+VNC)." \
     org.opencontainers.image.authors="Matthew Dwyer <dwyer@iastate.edu>" \
     org.opencontainers.image.source="https://github.com/Mluckydwyer/hw-ci"
 
@@ -30,10 +30,11 @@ WORKDIR /tmp
 ENV QUESTA_VERSION=22.2
 ENV QUESTA_VERSION_FULL=22.2.0.94
 RUN curl -sS -O https://downloads.intel.com/akdlm/software/acdsinst/22.2/94/ib_installers/QuestaSetup-22.2.0.94-linux.run \
-    && chmod +x ModelSimSetup-${QUESTA_VERSION_FULL}-linux.run \
-    && ./QuestaSetup-${QUESTA_VERSION_FULL}-linux.run --mode unattended --installdir /opt/intelFPGA/${QUESTA_VERSION} --accept_eula 1 --questa_edition questa_ase \
+    && curl -sS -O https://downloads.intel.com/akdlm/software/acdsinst/22.2/94/ib_installers/questa_part2-22.2.0.94-linux.qdz \
+    && chmod +x QuestaSetup-${QUESTA_VERSION_FULL}-linux.run \
+    && ./QuestaSetup-${QUESTA_VERSION_FULL}-linux.run --mode unattended --installdir /opt/intelFPGA/${QUESTA_VERSION} --accept_eula 1 --questa_edition questa_fse \
     && rm QuestaSetup-${QUESTA_VERSION_FULL}-linux.run
-ENV PATH="/opt/intelFPGA/${QUESTA_VERSION}/questa_ase/bin:${PATH}"
+ENV PATH="/opt/intelFPGA/${QUESTA_VERSION}/questa_fse/bin:${PATH}"
 
 
 # Install Symbiflow toolchain
