@@ -73,7 +73,7 @@ ENV PATH=$OG_PATH
 FROM ghdl as cocotb
 RUN pip3 install glob2 coverage cocotb cocotb_bus cocotb-test cocotb-coverage cocotbext-axi python-constraint \
                  pytest pytest-parallel pytest-xdist pytest-html pytest-sugar pytest-randomly pytest-emoji \
-                 pytest-icdiff pytest-asyncio pytest-rerunfailures pytest-repeat fixedpoint
+                 pytest-icdiff pytest-asyncio pytest-rerunfailures pytest-repeat fixedpoint pyvsc
 
 
 # Makepp + M4
