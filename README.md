@@ -81,7 +81,7 @@ Here is a list of the included helper scripts in the `full` and `dev` containers
 - `startup`: This script runs on startup of the `dev` container and starts noVNC, VNC, and the VSCode server in the background
 
 
-### LLVM & GCC (Devtoolsets)
+### LLVM & GCC (Devtoolsets in Centos 7 only)
 Included in the `dev` container is the LLVM 11.0 and GCC 10 toolsets. While they are installed, one must enable them using `scl`. The following are some sample ways to enable the devtool sets:
 ```properties
 scl enable devtoolset-10 'sh'
