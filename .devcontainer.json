@@ -1,6 +1,6 @@
 {
 	"name": "Hardware Development Container",
-    "image": "mluckydwyer/hw-ci:dev",
+    "image": "mluckydwyer/hw-ci:ubuntu",
 
 	"settings": { 
 		//"terminal.integrated.shell.linux": "/bin/bash",

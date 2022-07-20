@@ -37,36 +37,37 @@ This repository also has support for VScode Development Containers and Github Co
 ## 🛠️ Tools
 This container is split into three variants, `slim`, `full`, and `dev`. The `slim` variant contains all of the primary simulation and testing tools needed for CD/CI hardware development. It is intended to be light, fast, and used unattended. The `full` variant is built on top of the `slim` container and also includes additional tools that are useful when using the container for development. These include the Modelsim simulator tools, the Symbiflow open-source toolflow for both XC7 and EOS-S3 FPGAs, and other general programming tools such as an updated GCC version. Finally, the `dev` container is built off of the `full` container and includes some additional tools for working in a hands-on development enviornment. Most additions here are quality-of-life improvemnts for building automated flows with these tools or as a standalone development envrionemnt. See the table below for additional details:
 
-|                                            | Slim 🍃 | Full 🌱 |  Dev 🌳 |
-|:------------------------------------------:|:--------:|:--------:|:-------:|
-|                      Tag                   |  `slim`  |  `full`  |  `dev`  |
-|                   Base OS                  | Centos 7 | Centos 7 | Centos 7 |
-|               Size (Compressed Download)   | <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/slim?label=Image%20Size%20%28Slim%29"></a>  |  <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/full?label=Image%20Size%20%28Full%29"></a>  | <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/dev?label=Image%20Size%20%28Dev%29"></a> |
-|                  Verilator                 |     ✅    |     ✅    |     ✅    |
-|                    GHDL                    |     ✅    |     ✅    |     ✅    |
-|               Makepp, GNU M4               |     ✅    |     ✅    |     ✅    |
-| CocoTB + AXI, Coverage, and Pytest Plugins |     ✅    |     ✅    |     ✅    |
-|                Python 3.9.13               |     ✅    |     ✅    |     ✅    |
-|              Pytest + Plugins              |     ✅    |     ✅    |     ✅    |
-|           GCC 10 + LLVM 11 + Make          |          |     ✅    |     ✅    |
-|         Questasim 22.2.0.94 (Intel)        |          |     ✅    |     ✅    |
-|    Symbiflow with XC7 & EOS-S3 Support     |          |     ✅    |     ✅    |
-|                  Miniconda                 |          |     ✅    |     ✅    |
-|                    VUnit                   |          |     ✅    |     ✅    |
-|         Symbiflow Tool Helper Scripts      |          |     ✅    |     ✅    |
-|             Yowasp-Yosys + VSG             |          |          |     ✅    |
-|           VNC (NoVNC Web Server)           |          |          |     ✅    |
+|                                            | Slim 🍃 | Full 🌱 |  Dev 🌳 | Ubuntu 🎋 |
+|:------------------------------------------:|:--------:|:--------:|:-------:|:---------:|
+|                      Tag                   |  `slim`  |  `full`  |  `dev`  | `ubuntu` |
+|                   Base OS                  | Centos 7 | Centos 7 | Centos 7 | Ubuntu 20.04 |
+|               Size (Compressed Download)   | <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/slim?label=Image%20Size%20%28Slim%29"></a>  |  <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/full?label=Image%20Size%20%28Full%29"></a>  | <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/dev?label=Image%20Size%20%28Dev%29"></a> | <a href="https://hub.docker.com/r/mluckydwyer/hw-ci"><img alt="Docker Image Size (tag)" src="https://img.shields.io/docker/image-size/mluckydwyer/hw-ci/ubuntu?label=Image%20Size%20%28Ubuntu%29"></a> |
+|                  Verilator                 |     ✅    |     ✅    |     ✅    |     ✅    |
+|                    GHDL                    |     ✅    |     ✅    |     ✅    |     ✅    |
+|               Makepp, GNU M4               |     ✅    |     ✅    |     ✅    |     ✅    |
+| CocoTB + AXI, Coverage, and Pytest Plugins |     ✅    |     ✅    |     ✅    |     ✅    |
+|                 Python 3.8                 |            |            |           |     ✅     |
+|                Python 3.9.13               |     ✅    |     ✅    |     ✅    |            |
+|              Pytest + Plugins              |     ✅    |     ✅    |     ✅    |     ✅    |
+|           GCC 10 + LLVM 11 + Make          |          |     ✅    |     ✅    |     ✅    |
+|         Questasim 22.2.0.94 (Intel)        |          |     ✅    |     ✅    |            |
+|    Symbiflow with XC7 & EOS-S3 Support     |          |     ✅    |     ✅    |            |
+|                  Miniconda                 |          |     ✅    |     ✅    |            |
+|                    VUnit                   |          |     ✅    |     ✅    |     ✅    |
+|         Symbiflow Tool Helper Scripts      |          |     ✅    |     ✅    |     ✅    |
+|             Yowasp-Yosys + VSG             |          |          |     ✅    |     ✅    |
+|           VNC (NoVNC Web Server)           |          |          |     ✅    |     ✅    |
 |                VSCode Server               |          |          |     ✅    |
-|             Matplotlib (Python)            |          |          |     ✅    |
-|        Debugpy + Remote_pdb (Python)       |          |          |     ✅    |
-|              TerosHDL (VSCode)             |          |          |     ✅    |
-|                   GTKWave                  |          |          |     ✅    |
-|                   Firefox                  |          |          |     ✅    |
-|                    CMake                   |          |          |     ✅    |
-|                    Bash                    |          |          |     ✅    |
-|                 Vim + Nano                 |          |          |     ✅    |
-|             Sudo + Wget + Htop             |          |          |     ✅    |
-|           GUI Tool Helper Scripts          |          |          |     ✅    |
+|             Matplotlib (Python)            |          |          |     ✅    |     ✅    |
+|        Debugpy + Remote_pdb (Python)       |          |          |     ✅    |     ✅    |
+|              TerosHDL (VSCode)             |          |          |     ✅    |     ✅    |
+|                   GTKWave                  |          |          |     ✅    |     ✅    |
+|                   Firefox                  |          |          |     ✅    |     ✅    |
+|                    CMake                   |          |          |     ✅    |     ✅    |
+|                    Bash                    |          |          |     ✅    |     ✅    |
+|                 Vim + Nano                 |          |          |     ✅    |     ✅    |
+|             Sudo + Wget + Htop             |          |          |     ✅    |     ✅    |
+|           GUI Tool Helper Scripts          |          |          |     ✅    |     ✅    |
 
 
 ### 📜 Helper Scripts
