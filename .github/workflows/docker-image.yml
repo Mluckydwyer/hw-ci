@@ -100,7 +100,7 @@ jobs:
         cache-from: type=registry,ref=mluckydwyer/hw-ci:buildcache
         cache-to: type=registry,ref=mluckydwyer/hw-ci:buildcache,mode=max
   build-ubuntu:
-    name: "Build ununtu container"
+    name: "Build ubuntu container"
     runs-on: ubuntu-latest
     steps:
     -
